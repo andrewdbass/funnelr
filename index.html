@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+<!-- Firebase -->
+<script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
+<!-- AngularFire -->
+<script src="https://cdn.firebase.com/libs/angularfire/1.1.3/angularfire.min.js"></script>
+
+<script src = "app.js"></script>
+<html ng-app = "funnel">
+	<body>
+
+	<div ng-controller = "KpiController as kpiCtrl">
+		<h1>KPIS</h1>
+		<div class = "kpiButtons">
+			<p ng-repeat = "button in kpiCtrl.kpiArray">
+				<button class = "btn btn-primary" ng-style = "{'background-color': button.color}" ng-click = "increaseKpi(button)">{{button.name + " "+ button.current + "/" + button.goal}}</button>
+			</p>
+		</div>
+		<form ng-show = "kpiCtrl.showForm" novalidate>
+			<input ng-model = "kpi.name" type = "text">
+			<input ng-model = "kpi.goal" type = "number">
+			<input ng-model = "kpi.color" type = "color">
+			<input type="submit" ng-click="update(kpi)" value="Save" />
+			<button ng-click = "reset()">Reset</button>
+			<button ng-click = "hideForm()">Done</button>
+		</form>
+		<h1>Ratios</h1>
+		<div class = "ratio">
+			<p ng-repeat = "rat in kpiCtrl.ratioArray">{{kpiCtrl.kpiArray[rat.num].current + "/" + kpiCtrl.kpiArray[rat.den].current}}</p>
+		</div>
+		<form>
+			<p>Numerator</p>
+			<select ng-model = "ratio.num">
+				<option ng-repeat = "k in kpiCtrl.kpiArray" value ="{{kpiCtrl.kpiArray.indexOf(k)}}">{{k.name}}</option>
+			</select>
+			<p>Denomenator</p>
+			<select ng-model = "ratio.den">
+				<option ng-repeat = "k in kpiCtrl.kpiArray" value ="{{kpiCtrl.kpiArray.indexOf(k)}}">{{k.name}}</option>
+			</select>
+			<input type = "submit" ng-click = "createRatio(ratio)" value = "Save">
+		</form>
+		<pre>kpi = {{kpi | json}}</pre>
+		<pre>ratio = {{ratio | json}}</pre>
+  		<pre>master = {{master | json}}</pre>
+  		<pre>ratioArray = {{kpiCtrl.ratioArray}}</pre>	
+	</div>
+	</body>
+</html>
