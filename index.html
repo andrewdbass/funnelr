@@ -19,13 +19,13 @@
 				<button class = "btn btn-primary" ng-style = "{'background-color': button.color}" ng-click = "increaseKpi(button)">{{button.name + " "+ button.current + "/" + button.goal}}</button>
 			</p>
 		</div>
-		<form ng-show = "kpiCtrl.showForm" novalidate>
+		<form ng-show = "kpiCtrl.showKpiForm" novalidate>
 			<input ng-model = "kpi.name" type = "text">
 			<input ng-model = "kpi.goal" type = "number">
 			<input ng-model = "kpi.color" type = "color">
 			<input type="submit" ng-click="update(kpi)" value="Save" />
 			<button ng-click = "reset()">Reset</button>
-			<button ng-click = "hideForm()">Done</button>
+			<button ng-click = "hideKpiForm()">Done</button>
 		</form>
 		<h1>Ratios</h1>
 		
@@ -33,14 +33,14 @@
 			<p ng-repeat = "rat in ratios">{{kpis[rat.num].current + "/" + kpis[rat.den].current}}</p>
 		</div>
 		
-		<form>
+		<form ng-show = "kpiCtrl.showRatioForm" novalidate>
 			<p>Numerator</p>
 			<select ng-model = "ratio.num">
-				<option ng-repeat = "k in kpis" value ="{{k.$id}}">{{k.name}}</option>
+				<option ng-repeat = "k in kpis" value ="{{kpis.indexOf(k)}}">{{k.name}}</option>
 			</select>
 			<p>Denomenator</p>
 			<select ng-model = "ratio.den">
-				<option ng-repeat = "k in kpis" value ="{{k.$id}}">{{k.name}}</option>
+				<option ng-repeat = "k in kpis" value ="{{kpis.indexOf(k)}}">{{k.name}}</option>
 			</select>
 			<input type = "submit" ng-click = "createRatio(ratio)" value = "Save">
 		</form> 

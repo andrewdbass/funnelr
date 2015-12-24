@@ -9,7 +9,8 @@
 	  $scope.kpis = $firebaseArray(kpiRef);
 	  $scope.ratios = $firebaseArray(ratioRef);
 	 
-	  this.showForm = true;
+	  this.showKpiForm = true;
+	  this.showRatioForm = true;
 	  $scope.master = {};
 	  
 
@@ -19,13 +20,19 @@
         $scope.kpis.$add($scope.master);
         $scope.kpi = {};
       };
-      $scope.hideForm = function(){
-      	this.kpiCtrl.showForm = false;
+      $scope.hideKpiForm = function(){
+      	this.kpiCtrl.showKpiForm = false;
+      };
+
+      $scope.hideRatioForm = function(){
+      	this.kpiCtrl.showRatioForm = false;
       };
 
       $scope.reset = function() {
         $scope.kpi = {};
         $scope.master = {};
+        this.showKpiForm= true;
+        this.showRatioForm = true;
         
       };
       $scope.increaseKpi = function(button){
