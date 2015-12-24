@@ -15,7 +15,7 @@
 	<div ng-controller = "KpiController as kpiCtrl">
 		<h1>KPIS</h1>
 		<div class = "kpiButtons">
-			<p ng-repeat = "button in kpiCtrl.kpiArray">
+			<p ng-repeat = "button in kpis">
 				<button class = "btn btn-primary" ng-style = "{'background-color': button.color}" ng-click = "increaseKpi(button)">{{button.name + " "+ button.current + "/" + button.goal}}</button>
 			</p>
 		</div>
@@ -28,24 +28,27 @@
 			<button ng-click = "hideForm()">Done</button>
 		</form>
 		<h1>Ratios</h1>
+		
 		<div class = "ratio">
-			<p ng-repeat = "rat in kpiCtrl.ratioArray">{{kpiCtrl.kpiArray[rat.num].current + "/" + kpiCtrl.kpiArray[rat.den].current}}</p>
+			<p ng-repeat = "rat in ratios">{{kpis[rat.num].current + "/" + kpis[rat.den].current}}</p>
 		</div>
+		
 		<form>
 			<p>Numerator</p>
 			<select ng-model = "ratio.num">
-				<option ng-repeat = "k in kpiCtrl.kpiArray" value ="{{kpiCtrl.kpiArray.indexOf(k)}}">{{k.name}}</option>
+				<option ng-repeat = "k in kpis" value ="{{k.$id}}">{{k.name}}</option>
 			</select>
 			<p>Denomenator</p>
 			<select ng-model = "ratio.den">
-				<option ng-repeat = "k in kpiCtrl.kpiArray" value ="{{kpiCtrl.kpiArray.indexOf(k)}}">{{k.name}}</option>
+				<option ng-repeat = "k in kpis" value ="{{k.$id}}">{{k.name}}</option>
 			</select>
 			<input type = "submit" ng-click = "createRatio(ratio)" value = "Save">
-		</form>
+		</form> 
 		<pre>kpi = {{kpi | json}}</pre>
 		<pre>ratio = {{ratio | json}}</pre>
   		<pre>master = {{master | json}}</pre>
-  		<pre>ratioArray = {{kpiCtrl.ratioArray}}</pre>	
+  		<pre>kpis = {{kpis | json}}</pre>
+  		<pre>ratios = {{ratios | json}}</pre>
 	</div>
 	</body>
 </html>
