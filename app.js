@@ -4,22 +4,25 @@
 	var app = angular.module('funnel', ["firebase"]);
 	app.controller('KpiController', ['$scope','$window', '$firebaseArray', '$firebaseObject', function($scope,$window,$firebaseArray, $firebaseObject){
 	  var allData = new Firebase("https://brilliant-heat-8469.firebaseio.com/all_data");
-	  var kpiRef = new Firebase("https://brilliant-heat-8469.firebaseio.com/kpis");
+	  var todaysData = new Firebase("https://brilliant-heat-8469.firebaseio.com/todays_data");
 	  var ratioRef = new Firebase("https://brilliant-heat-8469.firebaseio.com/ratios");
+	  var kpiRef = new Firebase("https://brilliant-heat-8469.firebaseio.com/kpis")
 
 	  $scope.allData = $firebaseArray(allData);
-	  $scope.kpis = $firebaseArray(kpiRef);
+	  $scope.todaysData = $firebaseArray(todaysData);
 	  $scope.ratios = $firebaseArray(ratioRef);
+	  $scope.kpis = $firebaseArray(kpiRef);
 	 
 	  this.showKpiForm = true;
 	  this.showRatioForm = true;
 	  $scope.master = {};
 	  
 
-      $scope.update = function(kpi) {
+      $scope.createKpi = function(kpi) {
         $scope.master = angular.copy(kpi);
-        $scope.master.current = 0;
         $scope.kpis.$add($scope.master);
+        $scope.master.current = 0;
+        $scope.todaysData.$add($scope.master);
         $scope.kpi = {};
       };
       $scope.hideKpiForm = function(){
@@ -48,8 +51,14 @@
       };
       $scope.saveDay = function(){
       	$window.alert("you saved the day!");
-      	$scope.allData.$add($scope.kpis);
+      	var day = new Date().toString();
+      	var data = {date: day ,data: $scope.todaysData};
+      	$scope.allData.$add(data);
+      	$scope.todaysData = {};
+      	$scope.hideRatioForm();
+      	$scope.hideKpiForm();
       };
+
 
       $scope.reset();		
 	}]);

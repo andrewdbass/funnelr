@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+<!-- Firebase -->
+<script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
+<!-- AngularFire -->
+<script src="https://cdn.firebase.com/libs/angularfire/1.1.3/angularfire.min.js"></script>
+
+<script src = "app.js"></script>
+<body ng-app =  "funnel">
+	<div ng-controller = "KpiController as kpiCtrl">
+		<table>
+			<tr>
+				<td>Date</td>
+				<td>Name</td>
+				<td>Result</td>
+				<td>Goal</td>
+			</tr>
+		</table>
+		<table ng-repeat = "day in allData">
+			<tr ng-repeat = "data in day.data">
+				<td >{{day.date}}</td>
+				<td>{{data.name}}</td>
+				<td>{{data.current}}</td>
+				<td>{{data.goal}}</td>
+			</tr>
+		</table>
+		
+	<div>
+</body>
